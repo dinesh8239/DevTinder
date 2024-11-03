@@ -1,0 +1,20 @@
+{
+  "name": "practicetinder",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "run": "node src/app.js"
+  },
+  "keywords": [
+    "javascript, node, mongodb"
+  ],
+  "author": "Dinesh kumar",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7",
+    "start": "^5.1.0"
+  }
+}
