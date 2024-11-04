@@ -2,18 +2,26 @@ const express = require('express')
 const app = express()
 
 
-app.use('/hey',(req, res) => {
-    res.send('All is working')
+app.get('/user', (req, res) => {
+
+    res.send({firstName: 'Dinesh', lastName: 'kumar'})
 })
 
-app.use('/hii', (req, res) => {
-res.send('all set')
+app.post('/user', (req, res) => {
+
+    res.send('data successfully get')
 })
 
-app.use('/',(req, res) => {
+app.delete("/delete", (req, res) => {
+
+    res.send('data delete successfully')
+})
+
+
+
+app.use('/test',(req, res) => {
     res.send('api is working')
 })
-
 
 app.listen(3000)
 
