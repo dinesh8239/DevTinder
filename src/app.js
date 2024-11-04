@@ -1,29 +1,41 @@
 const express = require('express')
 const app = express()
 
+// app.use('/route', rh1, rh2, [rh3, rh4, rh5,])
 
-app.get('/user/:userId/:name/:password/:email', (req, res) => {
-    console.log(req.params);
-    res.send({ firstName: 'Dinesh', lastName: 'kumar' })
+app.use('/user', (req, res, next) => {
+    //Route handler
+    console.log('your api is working 1');
+    next()
+    // res.send('Route handler 1')
+
+}, 
+(req, res, next) => {
+    console.log('your api is working 2');
+    // res.send('Route handler 2')
+    next()
+},
+[(req, res, next) => {
+    console.log('your api is working 3');
+    // res.send('Route handler 3')
+    next()
+},
+(req, res, next) => {
+    console.log('your api is working 4');
+    // res.send('Route handler 4')
+    next()
+}],
+(req, res, next) => {
+    console.log('your api is working 5');
+    res.send('Route handler 5')
+    next()
+}
+)
+app.listen(3000, () => {
+    console.log("server is running");
+
 })
 
-app.post('/user', (req, res) => {
-
-    res.send('data successfully get')
-})
-
-app.delete("/delete", (req, res) => {
-
-    res.send('data delete successfully')
-})
-
-
-
-app.use('/test', (req, res) => {
-    res.send('api is working')
-})
-
-app.listen(3000)
 
 
 
@@ -32,8 +44,6 @@ app.listen(3000)
 
 
 
-
-//'^' this sign is tilda this work is Auto updated to 4.x.x. for.
 
 
 
