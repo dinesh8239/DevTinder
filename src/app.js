@@ -1,62 +1,23 @@
 const express = require('express')
 const app = express()
 
-// app.use('/route', rh1, rh2, [rh3, rh4, rh5,])
+const {adminAuth, userAuth} = require('../middlewares/auth')
 
-app.use('/user', (req, res, next) => {
-    //Route handler
-    console.log('your api is working 1');
-    next()
-    // res.send('Route handler 1')
+app.use("/admin", adminAuth, userAuth)
 
-}, 
-(req, res, next) => {
-    console.log('your api is working 2');
-    // res.send('Route handler 2')
-    next()
-},
-[(req, res, next) => {
-    console.log('your api is working 3');
-    // res.send('Route handler 3')
-    next()
-},
-(req, res, next) => {
-    console.log('your api is working 4');
-    // res.send('Route handler 4')
-    next()
-}],
-(req, res, next) => {
-    console.log('your api is working 5');
-    res.send('Route handler 5')
-    next()
-}
-)
-app.listen(3000, () => {
+app.use('/user', userAuth,  (req, res) => {
+    res.send('User Data send ')
+})
+
+app.get('/admin/getallData',(req, res) => {
+res.send('All data sent')
+})
+
+app.get('/admin/deleteUser',(req, res) => {
+    res.send('Deleted user data')
+})
+
+app.listen(3001, () => {
     console.log("server is running");
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
