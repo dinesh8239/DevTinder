@@ -14,7 +14,7 @@
         console.log('Admin auth is getting checked!!');
         
             const token = "xyz"
-            const isAdminAuthorized = token == "xyzfd"
+            const isAdminAuthorized = token == "xyz"
             if(!isAdminAuthorized) {
                 res.status(401).send('unauthorized request')
             }else {

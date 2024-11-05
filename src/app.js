@@ -1,21 +1,31 @@
 const express = require('express')
 const app = express()
 
-const {adminAuth, userAuth} = require('../middlewares/auth')
-
-app.use("/admin", adminAuth, userAuth)
-
-app.use('/user', userAuth,  (req, res) => {
-    res.send('User Data send ')
+app.use('/', (err, req, res, next) => {
+    if (err) {
+        // Log your error
+        res.status(500).send('something went wrong')
+    }
 })
 
-app.get('/admin/getallData',(req, res) => {
-res.send('All data sent')
+app.get('/getuserData', (req, res) => {
+    try {
+
+        throw new Error("dbjfdkjf");
+        res.send("User Data Sent")
+    } catch (err) { 
+        res.status(500).send("some error contact support team")
+    }
 })
 
-app.get('/admin/deleteUser',(req, res) => {
-    res.send('Deleted user data')
+
+app.use('/', (err, req, res, next) => {
+    if (err) {
+        // Log your error
+        res.status(500).send('something went wrong')
+    }
 })
+
 
 app.listen(3001, () => {
     console.log("server is running");
