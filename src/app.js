@@ -2,19 +2,59 @@ const express = require('express')
 const app = express()
 const connectDB = require('./config/database')
 const User = require('./models/user')
+const user = require('./models/user')
 app.use(express.json())
+
+
 
 app.post('/signup', async (req, res) => {
 
     const user = new User(req.body)
-try {
-    await user.save()
-    res.send('Data sent successfully')
-}catch {
-    res.status(400).send('something went wrong')
-}
+    try {
+        await user.save()
+        res.send('Data sent successfully')
+    } catch {
+        res.status(400).send('something went wrong')
+    }
 }
 )
+app.get('/user', async (req, res) => {
+
+    const userId = (req.body._id)
+
+    const users = await user.findById({ _id: userId })
+    if (!users) {
+        res.status(404).send('user not found')
+    } else {
+
+        res.send(users)
+    }
+
+    // try {
+    //     const users = await User.find({ emailId: userEmail })
+    //     if (users.length === 0) {
+    //         res.status(404).send('user not found')
+    //     } else {
+    //         res.send(users)
+    //     }
+    // } catch (err) {
+    //     res.status(400).send('something went wrong')
+    // }
+
+})
+
+
+app.get('/allUser', async (req, res) => {
+
+    try {
+        const users = await user.find({})
+        res.send(users)
+    } catch (err) {
+        res.status(400).send('something went wrong')
+    }
+})
+
+
 
 connectDB().then(() => {
     console.log('connect to DB');
