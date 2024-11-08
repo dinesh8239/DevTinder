@@ -55,10 +55,10 @@ app.get('/allUser', async (req, res) => {
 })
 
 app.delete("/user", async (req, res) => {
-const userId = req.body.userId
+    const userId = req.body.userId
 
     try {
-        const user = await User.findByIdAndDelete({_id: userId})
+        const user = await User.findByIdAndDelete({ _id: userId })
 
         // const user = await User.findByIdAndDelete(userId)
 
@@ -70,35 +70,59 @@ const userId = req.body.userId
 }
 )
 
-app.put("/user", async(req, res) => {
-const userId = req.body.userId
+app.put("/user", async (req, res) => {
+    const userId = req.body.userId
 
-const user = await User.findByIdAndUpdate(userId, { $set: { emailId: 'ronalldo55@gmail.com' }})
+    const user = await User.findByIdAndUpdate(userId, { $set: { emailId: 'ronalldo55@gmail.com' } })
 
-try {
-    res.send("data update successfully")
-} catch(err) {
-    res.status(400).send('something went wrong')
-}
+    try {
+        res.send("data update successfully")
+    } catch (err) {
+        res.status(400).send('something went wrong')
+    }
 
 })
 
 
-app.patch("/user", async(req, res) => {
-const userId = req.body.userId
-const data = req.body
+app.patch("/user/:userId", async (req, res) => {
+    const userId = req.params?.userId
+    const data = req.body
 
+    try {
+        const ALLOWED_UPDATES = [
+            "photoUrl",
+            "about",
+            "gender",
+            "age", 
+            "skills"
+        ]
 
+        // {
+        //     "userId": "672dfcb6a08cf51dd2bbfa97",
+        //     "firstName": "sharddha",
+        //     "gender": "female",
+        //     "skills": ["Acting", "Javascript", "Dancer", "Singing"]
+        //  }
 
-try {
-const user  = await User.findByIdAndUpdate({_id: userId}, data, {returnDocument: 'after'})
-console.log(user);
+        const isUpdateAllowed = Object.keys(data).every((key) =>
+            ALLOWED_UPDATES.includes(key)
+        )
+        if (!isUpdateAllowed) {
+            throw new Error('updated not allowed')
+        }
 
-res.send('data updated successfully')
+        if(data?.skills.length > 10) {
+            throw new Error('skills cannot be add more 10')
+        }
 
-}catch(err) {
-    res.status(400).send('update failed' + err.message)
-}
+        const user = await User.findByIdAndUpdate({ _id: userId }, data, { returnDocument: 'after' })
+        console.log(user);
+
+        res.send('data updated successfully')
+
+    } catch (err) {
+        res.status(400).send('update failed:' + err.message)
+    }
 
 })
 
