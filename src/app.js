@@ -14,7 +14,7 @@ app.post('/signup', async (req, res) => {
         await user.save()
         res.send('Data sent successfully')
     } catch {
-        res.status(400).send('something went wrong')
+        res.status(400).send('signup failed')
     }
 }
 )
@@ -97,7 +97,7 @@ console.log(user);
 res.send('data updated successfully')
 
 }catch(err) {
-    res.status(400).send('something went wrong')
+    res.status(400).send('update failed' + err.message)
 }
 
 })
